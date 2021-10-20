@@ -1,6 +1,10 @@
-from flask import Flask, render_template, request, Response
+import logging
+
+from flask import Flask, Response, render_template, request
 
 from convert import pdf_to_string
+
+logging.basicConfig(level=logging.INFO)
 
 app = Flask(__name__)
 
