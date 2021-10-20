@@ -27,6 +27,9 @@ def index():
             return "No file", 400
 
         if file and allowed_file(file):
-            return Response(
-                pdf_to_string(file.read()), headers={"Content-Type": "text/plain"}
-            )
+            text = ""
+            for i, page in enumerate(pdf_to_string(file)):
+                text += f"\n\n{'=' * 25} PAGE {i + 1} {'=' * 25}\n\n"
+                text += page
+
+            return Response(text.strip(), headers={"Content-Type": "text/plain"})

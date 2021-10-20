@@ -2,7 +2,11 @@ FROM python:3.9.7-slim-bullseye
 
 RUN apt update && apt install -y --no-install-recommends \
     poppler-utils \
-    tesseract-ocr
+    tesseract-ocr \
+    build-essential \
+    libpoppler-cpp-dev \
+    pkg-config \
+    python3-dev
 
 COPY requirements.txt .
 RUN pip install -r requirements.txt
