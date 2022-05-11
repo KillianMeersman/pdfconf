@@ -32,8 +32,15 @@ def index():
 
         if file and allowed_file(file):
             text = ""
-            for i, page in enumerate(pdf_to_string(file)):
-                text += f"\n\n{'=' * 25} PAGE {i + 1} {'=' * 25}\n\n"
-                text += page
+            try:
+                for i, page in enumerate(
+                    pdf_to_string(file, password=request.form.get("password"))
+                ):
+                    text += f"\n\n{'=' * 25} PAGE {i + 1} {'=' * 25}\n\n"
+                    text += page
+            except ValueError as e:
+                return Response(
+                    str(e), status=400, headers={"Content-Type": "text/plain"}
+                )
 
             return Response(text.strip(), headers={"Content-Type": "text/plain"})
